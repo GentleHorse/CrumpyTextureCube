@@ -17,7 +17,7 @@
 //import dat.gui-------------------------------------------
   import * as dat from 'dat.gui';
 
-  const gui = new dat.GUI();
+  const gui = new dat.GUI({width: 350});
   const world_box = {
       box: {
       width: 200,
@@ -36,19 +36,22 @@
   }
 
   //add gui panels + update function when parameters are updated
-  gui.add(world_box.box, 'width', 1, 500).onChange(generateBox);
-  gui.add(world_box.box, 'height', 1, 500).onChange(generateBox);
-  gui.add(world_box.box, 'depth', 1, 500).onChange(generateBox);
-  gui.add(world_box.box, 'widthSegments', 1, 100).onChange(generateBox);
-  gui.add(world_box.box, 'heightSegments', 1, 100).onChange(generateBox);
-  gui.add(world_box.box, 'depthSegments', 1, 100).onChange(generateBox);
-  gui.add(world_box.box, 'r', 0, 1.0).onChange(generateBox);
-  gui.add(world_box.box, 'g', 0, 1.0).onChange(generateBox);
-  gui.add(world_box.box, 'b', 0, 1.0).onChange(generateBox);
-  gui.add(world_box.box, 'hv_r', 0, 1.0).onChange(generateBox);
-  gui.add(world_box.box, 'hv_g', 0, 1.0).onChange(generateBox);
-  gui.add(world_box.box, 'hv_b', 0, 1.0);  
- 
+  gui.add(world_box.box, 'width', 1, 500).onChange(generateBox).name("Width");
+  gui.add(world_box.box, 'height', 1, 500).onChange(generateBox).name("Height");
+  gui.add(world_box.box, 'depth', 1, 500).onChange(generateBox).name("Depth");
+  gui.add(world_box.box, 'widthSegments', 1, 100).onChange(generateBox).name("Width Segments");
+  gui.add(world_box.box, 'heightSegments', 1, 100).onChange(generateBox).name("Height Segments");
+  gui.add(world_box.box, 'depthSegments', 1, 100).onChange(generateBox).name("Depth Segments");
+  gui.add(world_box.box, 'r', 0, 1.0).onChange(generateBox).name("Box Color: Red");
+  gui.add(world_box.box, 'g', 0, 1.0).onChange(generateBox).name("Box Color: Green");
+  gui.add(world_box.box, 'b', 0, 1.0).onChange(generateBox).name("Box Color: Blue");
+  gui.add(world_box.box, 'hv_r', 0, 1.0).onChange(generateBox).name("Hover Color: Red");
+  gui.add(world_box.box, 'hv_g', 0, 1.0).onChange(generateBox).name("Hover Color: Green");
+  gui.add(world_box.box, 'hv_b', 0, 1.0).onChange(generateBox).name("Hover Color: Blue");
+  gui.add(world_box.box, 'hv_b', 0, 1.0).onChange(generateBox).name("Hover Color: Blue");
+
+  console.log(world_box.box);
+
   function generateBox(){
     boxMesh.geometry.dispose();
     boxMesh.geometry = new THREE.BoxGeometry(
@@ -153,6 +156,7 @@
   const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
   scene.add(boxMesh);
   generateBox();  
+  boxMaterial.wireframe = true;
 
 //add light and backlight--------------------------------------  
   const light = new THREE.DirectionalLight(0xffffff, 1);
