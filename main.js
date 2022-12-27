@@ -48,9 +48,7 @@
   gui.add(world_box.box, 'hv_r', 0, 1.0).onChange(generateBox).name("Hover Color: Red");
   gui.add(world_box.box, 'hv_g', 0, 1.0).onChange(generateBox).name("Hover Color: Green");
   gui.add(world_box.box, 'hv_b', 0, 1.0).onChange(generateBox).name("Hover Color: Blue");
-  gui.add(world_box.box, 'hv_b', 0, 1.0).onChange(generateBox).name("Hover Color: Blue");
-
-  console.log(world_box.box);
+  
 
   function generateBox(){
     boxMesh.geometry.dispose();
@@ -115,29 +113,7 @@
   new OrbitControls(camera, renderer.domElement);
   camera.position.z = 300;  
 
-//Texture settings--------------------------------------------
-  // let envmaploader = new THREE.PMREMGenerator(renderer);
-
-  // new RGBELoader().setPath('textures/').load('cayley_interior_4k', function(hdrmap){
-  //   let envmaploader = envmaploader.fromCubemap(hdrmap);
-  //   let texture = new THREE.CanvasTexture(new FlakesTexture());
-  //   texture.wrapS = THREE.RepeatWrapping;
-  //   texture.wrapT = THREE.RepeatWrapping;  
-  //   texture.repeat.x = 10;
-  //   texture.repeat.y = 6;
-
-  //   const boxPhysicalMaterial = {
-  //     clearcoat: 1.0,
-  //     clearcoatRoughness: 0.1,
-  //     metalness: 0.5,
-  //     color: 0x8418ca,
-  //     normalMap: texture,
-  //     normalScale: new THREE.Vector2(0.15, 0.15),
-  //     envMap: envmap.texture
-  //   };
-  // });
-
-//default box geometry (MeshPhongMaterial)-------------------
+//default box geometry (MeshStandardMaterial)-------------------
 
   const boxGeometry = new THREE.BoxGeometry(
       world_box.box.width,
@@ -147,16 +123,17 @@
       world_box.box.heightSegments,
       world_box.box.depthSegments
     );
-  const boxMaterial = new THREE.MeshPhongMaterial({
+  const boxMaterial = new THREE.MeshStandardMaterial({
     side: THREE.DoubleSide,
     flatShading: THREE.FlatShading,
-    vertexColors: true    
+    vertexColors: true
     });
   // const boxMaterial = new THREE.MeshPhysicalMaterial(boxPhysicalMaterial);
   const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+  boxMaterial.wireframe = true;
+  gui.add(boxMaterial, 'wireframe').name("wireframe")
   scene.add(boxMesh);
   generateBox();  
-  boxMaterial.wireframe = true;
 
 //add light and backlight--------------------------------------  
   const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -264,8 +241,8 @@
 
       }
 
-      boxMesh.rotation.x += 0.0001;
-      boxMesh.rotation.y += 0.00015;
+      boxMesh.rotation.x += 0.001;
+      boxMesh.rotation.y += 0.0015;
   }  
 
   animate();
